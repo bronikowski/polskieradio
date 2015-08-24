@@ -26,9 +26,14 @@ for box in boxes:
         for item in items:
             hour, minutes = item.find('span', class_='sTime').text.split(':')
             begin = datetime.datetime(today.year, today.month, today.day, int(hour), int(minutes))
+            end = None
+            if events:
+                # did we put anything before on the events stack>
+                events[-1].end = begin 
             events.append(ics.Event(
                 name=item.find('span', class_='desc').text,
                 begin=begin,
+                end=end,
             ))
         calendar = ics.Calendar(events=events)
 
