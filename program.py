@@ -24,7 +24,6 @@ for box in boxes:
     if box.find('ul', class_='scheduleView'):
         items = box.ul.find_all('li', class_='programmeLi')
         for item in items:
-            print('{} — {}'.format(item.find('span', class_='sTime').text, item.find('span', class_='desc').text))
             hour, minutes = item.find('span', class_='sTime').text.split(':')
             begin = datetime.datetime(today.year, today.month, today.day, int(hour), int(minutes))
             events.append(ics.Event(
@@ -32,8 +31,11 @@ for box in boxes:
                 begin=begin,
             ))
         calendar = ics.Calendar(events=events)
-        with open(PROGRAMMS[idx], 'w') as f:
-            f.writelines(calendar)
 
+        ics_file = '{}.ics'.format(PROGRAMMS[idx])
+
+        with open(ics_file, 'w') as f:
+            f.writelines(calendar)
+            print('Wrote {} to disk'.format(ics_file))
         idx += 1
 
