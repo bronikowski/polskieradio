@@ -19,10 +19,10 @@ idx = 0
 
 for box in boxes:
 
-    events = []
     today = datetime.datetime.now()
     if box.find('ul', class_='scheduleView'):
         items = box.ul.find_all('li', class_='programmeLi')
+        events = []
         for item in items:
             hour, minutes = item.find('span', class_='sTime').text.split(':')
             begin = datetime.datetime(today.year, today.month, today.day, int(hour), int(minutes))
